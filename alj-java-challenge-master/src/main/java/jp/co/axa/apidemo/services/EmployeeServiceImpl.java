@@ -37,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     public String saveEmployee(Employee employee){
         try {
             employeeRepository.save(employee);
-            return "Employee saved successfully ";
+            return "Employee saved successfully";
         } catch (Exception e) {
             return "Exception occured";
         }
