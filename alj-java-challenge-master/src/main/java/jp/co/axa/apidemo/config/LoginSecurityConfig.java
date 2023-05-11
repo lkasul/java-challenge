@@ -6,9 +6,20 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+/**
+ * Protect rest api endpoint access
+ *
+ * @author Laxmi
+ */
 @Configuration
 public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /**
+     * Roles created
+     *
+     * @param auth
+     * @throws Exception
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
@@ -19,7 +30,12 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    // Secure the endpoins with HTTP Basic authentication
+    /**
+     * Secure the endpoins with HTTP Basic authentication
+     *
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 

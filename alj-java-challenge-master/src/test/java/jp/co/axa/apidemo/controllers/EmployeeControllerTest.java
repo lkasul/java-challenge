@@ -209,9 +209,8 @@ public class EmployeeControllerTest {
      */
     @Test
     public void updateEmployee_admin_success() throws Exception {
-        when(mockEmployeeService.getEmployee(1L)).thenReturn(emp1);
         emp1.setDepartment("updatedDept");
-        when(mockEmployeeService.saveEmployee(emp1)).thenReturn("Employee saved successfully");
+        when(mockEmployeeService.updateEmployee(emp1,1L)).thenReturn("Employee updated successfully");
         JSONObject employeeJson = new JSONObject();
         employeeJson.put("id","1");
         employeeJson.put("name","abc");
@@ -231,7 +230,7 @@ public class EmployeeControllerTest {
                 request,
                 String.class);
         printJSON(putresponse);
-        Assert.assertEquals(true, putresponse.getBody().contains("Employee saved successfully"));
+        Assert.assertEquals(true, putresponse.getBody().contains("Employee updated successfully"));
     }
 
     /**
@@ -241,15 +240,13 @@ public class EmployeeControllerTest {
      */
     @Test
     public void updateEmployee_user_failure() throws Exception {
-        when(mockEmployeeService.getEmployee(1L)).thenReturn(emp1);
         emp1.setDepartment("updatedDept");
-        when(mockEmployeeService.saveEmployee(emp1)).thenReturn("Employee saved successfully");
+        when(mockEmployeeService.updateEmployee(emp1,1L)).thenReturn("Employee updated successfully");
         JSONObject employeeJson = new JSONObject();
         employeeJson.put("id","1");
         employeeJson.put("name","abc");
         employeeJson.put("salary","120000");
         employeeJson.put("department","updatedDept");
-
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth("user","password");
         headers.setContentType(MediaType.APPLICATION_JSON);
