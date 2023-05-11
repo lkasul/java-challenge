@@ -1,7 +1,7 @@
 package jp.co.axa.apidemo.services;
 
+import jp.co.axa.apidemo.dao.EmployeeDao;
 import jp.co.axa.apidemo.entities.Employee;
-import jp.co.axa.apidemo.repositories.EmployeeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -23,10 +23,10 @@ import java.util.Set;
 public class EmployeeServiceImpl implements EmployeeService{
 
     /** Employee repository */
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeDao employeeDao;
 
-    public EmployeeServiceImpl(final EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeServiceImpl(final EmployeeDao employeeDao) {
+        this.employeeDao = employeeDao;
     }
 
     /**
@@ -36,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService{
      */
     public List<Employee> retrieveEmployees() {
         try {
-            List<Employee> employees = employeeRepository.findAll();
+            List<Employee> employees = employeeDao.getAllEmployees();
             return employees;
         } catch (Exception e) {
             return null;
@@ -51,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService{
      */
     public Employee getEmployee(Long employeeId) {
         try {
-            Optional<Employee> optEmp = employeeRepository.findById(employeeId);
+            Optional<Employee> optEmp = Optional.ofNullable(employeeDao.getEmployeeById(employeeId));
             return optEmp.orElse(null);
         } catch (Exception e) {
             return null;
@@ -74,7 +74,7 @@ public class EmployeeServiceImpl implements EmployeeService{
             if(!StringUtils.isEmpty(validationMsg)) {
                 return validationMsg;
             }
-            employeeRepository.save(employee);
+            employeeDao.saveEmployee(employee);
             return "Employee saved successfully";
         } catch (Exception e) {
             return "Exception occured";
@@ -93,7 +93,7 @@ public class EmployeeServiceImpl implements EmployeeService{
             if (emp == null) {
                 return "Employee does not exist";
             }
-            employeeRepository.deleteById(employeeId);
+            employeeDao.deleteOneEmployee(employeeId);
             return "Employee deleted successfully";
         } catch (Exception e) {
             return "Exception occured";
@@ -120,7 +120,7 @@ public class EmployeeServiceImpl implements EmployeeService{
             if (!employeeId.equals(employee.getId())) {
                 return "Employee id cannot be changed";
             }
-            employeeRepository.save(employee);
+            employeeDao.updateOneEmployee(employee);
             return "Employee updated successfully";
         } catch (Exception e) {
             return "Exception occured";
