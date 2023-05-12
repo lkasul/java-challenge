@@ -8,6 +8,7 @@ What I did
 4. Added junit for service implementation class
 5. Added caching logic to database calls
 6. Added java docs
+7. Added validation to api request
 
 What I have done if I has¥d more time
 
@@ -17,6 +18,7 @@ What I have done if I has¥d more time
 4. Integrate to splunk
 5. Refactoring code
 6. Add junit for db caching
+7. Check performance
 
 My experience
 
